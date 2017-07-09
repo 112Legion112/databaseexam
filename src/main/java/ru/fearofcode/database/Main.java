@@ -17,6 +17,7 @@ public class Main {
 
     private static final String INSERT_NEW = "INSERT INTO dish VALUES(?,?,?,?,?,?,?);";
     private static final String GET_ALL = "SELECT * FROM dish;";
+    private static final String DELETE = "DELETE FROM dish WHERE id=?";
 
 
     public static void main(String[] args) {
@@ -28,9 +29,12 @@ public class Main {
             DriverManager.registerDriver(driver);
 
             connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+
+            preparedStatement = connection.prepareStatement(DELETE);
+            preparedStatement.setInt(1, 2);
+            preparedStatement.executeUpdate();
+
             preparedStatement = connection.prepareStatement(GET_ALL);
-
-
 
             ResultSet res = preparedStatement.executeQuery();
 
@@ -57,6 +61,12 @@ public class Main {
 
         } catch (SQLException e){
             e.printStackTrace();
+        } finally {
+            try {
+                connection.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
     }
 }
