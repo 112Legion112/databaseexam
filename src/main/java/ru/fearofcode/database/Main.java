@@ -25,8 +25,7 @@ public class Main {
                 Connection connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
                 Statement statement = connection.createStatement();
         ) {
-            int rest = statement.executeUpdate("UPDATE animal SET name='New Name' WHERE id=1;");
-            System.out.println(rest);
+            ResultSet rest = statement.executeQuery("SELECT * FROM animal");
         } catch (SQLException e) {
             e.printStackTrace();
         }
