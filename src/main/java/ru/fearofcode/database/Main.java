@@ -28,22 +28,34 @@ public class Main {
             DriverManager.registerDriver(driver);
 
             connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
-
-            preparedStatement = connection.prepareStatement(INSERT_NEW);
-            preparedStatement.setInt(1,2);
-            preparedStatement.setString(2, "Inserted title");
-            preparedStatement.setString(3, "Inserted dest");
-            preparedStatement.setFloat(4, 0.0f);
-            preparedStatement.setBoolean(5, true);
-            preparedStatement.setDate(6, new Date(Calendar.getInstance().getTimeInMillis()));
-            preparedStatement.setBlob(7, new FileInputStream("smile.png"));
-
-            preparedStatement.execute();
+            preparedStatement = connection.prepareStatement(GET_ALL);
 
 
 
+            ResultSet res = preparedStatement.executeQuery();
 
-        } catch (SQLException | FileNotFoundException e){
+            while (res.next()) {
+                int id = res.getInt("id");
+                String title = res.getString("title");
+                String desc = res.getString("description");
+                float rating = res.getFloat("rating");
+                boolean published = res.getBoolean("published");
+                Date date = res.getDate("creaated");
+                byte[] icon = res.getBytes("icon");
+
+                System.out.println("id: " + id
+                        + ", title: " + title
+                        + ", description: " + desc
+                        + ", rating: " + rating
+                        + ", published: " + published
+                        + ", create: " + date
+                        + ", icon length: " + icon.length
+                );
+            }
+
+
+
+        } catch (SQLException e){
             e.printStackTrace();
         }
     }
