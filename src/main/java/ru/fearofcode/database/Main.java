@@ -25,7 +25,8 @@ public class Main {
                 Connection connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
                 Statement statement = connection.createStatement();
         ) {
-            statement.execute("INSERT INTO animal(name,dest) VALUES ('name', 'noon');");
+            int rest = statement.executeUpdate("UPDATE animal SET name='New Name' WHERE id=1;");
+            System.out.println(rest);
         } catch (SQLException e) {
             e.printStackTrace();
         }
